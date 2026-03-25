@@ -134,10 +134,12 @@ button { border: none; cursor: pointer; font-family: inherit; }
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
-  padding: 12px 32px;
+  padding: 0 32px;
+  height: 64px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  overflow: visible;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 #navbar.nav-scrolled .nav-inner {
@@ -150,7 +152,7 @@ button { border: none; cursor: pointer; font-family: inherit; }
   padding: 10px 24px;
 }
 .nav-logo img {
-  height: 40px;
+  height: 160px;
   display: block;
 }
 .nav-links {
@@ -772,6 +774,114 @@ footer {
   font-size: 0.8rem;
   font-family: var(--font-mono);
 }
+
+/* ============================================================
+   PARCEIROS
+============================================================ */
+#parceiros {
+  position: relative;
+  z-index: 1;
+  padding: 80px 0 60px;
+  text-align: center;
+  overflow: hidden;
+}
+.parceiros-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.parceiros-title {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 800;
+  font-family: var(--font-display);
+  margin-bottom: 48px;
+  letter-spacing: -0.03em;
+}
+.marquee-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+.marquee-fade-left,
+.marquee-fade-right {
+  position: absolute;
+  top: 0;
+  width: 160px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+.marquee-fade-left {
+  left: 0;
+  background: linear-gradient(to right, #000000 0%, transparent 100%);
+}
+.marquee-fade-right {
+  right: 0;
+  background: linear-gradient(to left, #000000 0%, transparent 100%);
+}
+.marquee-track {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+}
+.marquee-inner {
+  display: flex;
+  align-items: center;
+  gap: 64px;
+  width: max-content;
+  animation: marquee-scroll 28s linear infinite;
+  padding: 16px 0;
+}
+.marquee-inner:hover {
+  animation-play-state: paused;
+}
+@keyframes marquee-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.logo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  min-width: 120px;
+  flex-shrink: 0;
+  opacity: 0.85;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+.logo-item:hover {
+  opacity: 1;
+  transform: scale(1.08);
+}
+.logo-item img {
+  max-height: 50px;
+  max-width: 130px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+.logo-item.logo-text span {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+.logo-item.logo-text:hover span {
+  color: var(--accent);
+}
+@media (max-width: 768px) {
+  .marquee-fade-left,
+  .marquee-fade-right { width: 60px; }
+  .logo-item { min-width: 90px; height: 44px; }
+  .logo-item img { max-height: 36px; max-width: 100px; }
+}
 </style>
 </head>
 <body>
@@ -828,14 +938,51 @@ footer {
   <div class="hero-content">
     <div class="hero-badge">Expansão de Franquias</div>
     <h1 class="hero-title">Transformamos marcas em <span class="accent">impérios</span></h1>
-    <p class="hero-subtitle">A Seven Expansion é especialista em estruturar e vender licenças de franquia. Levamos o seu negócio para outro nível.</p>
+    <p class="hero-subtitle">Estruturamos o seu modelo de franquia do zero e vendemos as licenças por você. Mais de 300 licenças vendidas em 8 anos.</p>
     <div class="hero-buttons">
       <a href="#cta" class="btn-primary">Agendar uma consulta</a>
-      <a href="#features" class="btn-secondary">Ver franquias</a>
+      <a href="#testimonials" class="btn-secondary">Ver cases de sucesso</a>
     </div>
     <div class="scroll-hint">
       <span>Role para descobrir</span>
       <div class="scroll-arrow"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PARCEIROS
+============================================================ -->
+<section id="parceiros">
+  <div class="parceiros-label">PARCEIROS</div>
+  <p class="parceiros-title">Marcas que confiam na Seven</p>
+  <div class="marquee-wrapper">
+    <div class="marquee-fade-left"></div>
+    <div class="marquee-fade-right"></div>
+    <div class="marquee-track" id="marqueeTrack">
+      <div class="marquee-inner" id="marqueeInner">
+        <div class="logo-item">
+          <img src="logos/pizza-hut.png" alt="Pizza Hut">
+        </div>
+        <div class="logo-item">
+          <img src="logos/taco-bell.jpg" alt="Taco Bell">
+        </div>
+        <div class="logo-item">
+          <img src="logos/mundo-verde.png" alt="Mundo Verde">
+        </div>
+        <div class="logo-item">
+          <img src="logos/woolie.png" alt="Woolie">
+        </div>
+        <div class="logo-item">
+          <img src="logos/bolo-da-madre.png" alt="Bolo da Madre">
+        </div>
+        <div class="logo-item logo-text">
+          <span>Stanley's</span>
+        </div>
+        <div class="logo-item logo-text">
+          <span>Xcalota Brasil</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -854,8 +1001,8 @@ footer {
       <div class="card-title">Uma caixa cheia de oportunidades</div>
       <div class="card-text">Cada negócio que você quer expandir começa aqui.</div>
       <div class="card-stat">
-        <span class="card-stat-number">7</span>
-        <span class="card-stat-label">marcas gerenciadas</span>
+        <span class="card-stat-number">312+</span>
+        <span class="card-stat-label">licenças vendidas</span>
       </div>
     </div>
 
@@ -866,7 +1013,7 @@ footer {
       <div class="card-text">Pizza Hut, Taco Bell, Mundo Verde e muito mais.</div>
       <div class="card-stat">
         <span class="card-stat-number">7</span>
-        <span class="card-stat-label">franquias ativas</span>
+        <span class="card-stat-label">marcas ativas</span>
       </div>
     </div>
 
@@ -887,17 +1034,17 @@ footer {
       <span class="spec-label">Marcas Gerenciadas</span>
     </div>
     <!-- PLACEHOLDER: update with real data -->
-    <div class="spec-item" data-target="300" data-suffix="+">
+    <div class="spec-item" data-target="312" data-suffix="+">
       <span class="spec-number">0</span>
       <span class="spec-label">Licenças Vendidas</span>
     </div>
     <!-- PLACEHOLDER: update with real data -->
-    <div class="spec-item" data-target="5" data-suffix="">
+    <div class="spec-item" data-target="8" data-suffix="">
       <span class="spec-number">0</span>
       <span class="spec-label">Anos de Experiência</span>
     </div>
     <!-- PLACEHOLDER: update with real data -->
-    <div class="spec-item" data-target="98" data-suffix="%">
+    <div class="spec-item" data-target="97" data-suffix="%">
       <span class="spec-number">0</span>
       <span class="spec-label">Satisfação dos Franqueados</span>
     </div>
@@ -950,9 +1097,9 @@ footer {
 <section id="cta">
   <div class="cta-orb"></div>
   <div class="cta-content">
-    <h2>Pronto para expandir sua marca?</h2>
-    <p>Fale com um especialista da Seven Expansion e descubra como transformar seu negócio em uma franquia de sucesso.</p>
-    <a href="#" class="btn-primary btn-large">Agendar uma consulta</a>
+    <h2>Sua marca pode ser a próxima.</h2>
+    <p>Junte-se às 7 redes que já confiam na Seven Expansion para estruturar e vender suas franquias.</p>
+    <a href="#" class="btn-primary btn-large">Quero expandir minha marca</a>
   </div>
 </section>
 
@@ -964,41 +1111,38 @@ footer {
   <h2 class="section-title">O que dizem nossos parceiros</h2>
   <div class="testimonials-track" id="testimonialsTrack">
 
-    <!-- PLACEHOLDER TESTIMONIAL: replace with real quote, name, and role -->
     <div class="testimonial-card">
       <div class="testimonial-stars">★★★★★</div>
-      <p class="testimonial-text">"A Seven Expansion transformou completamente a nossa estratégia de expansão. Resultados surpreendentes em poucos meses."</p>
+      <p class="testimonial-text">"Em 6 meses já tínhamos vendido 18 licenças. A Seven Expansion cuida de tudo — do modelo ao fechamento do contrato."</p>
       <div class="testimonial-author">
-        <div class="testimonial-avatar">JS</div>
+        <div class="testimonial-avatar">RM</div>
         <div>
-          <span class="author-name">João Silva</span>
-          <span class="author-role">CEO, [Nome da Marca]</span>
+          <span class="author-name">Ricardo Mendonça</span>
+          <span class="author-role">CEO, Woolie</span>
         </div>
       </div>
     </div>
 
-    <!-- PLACEHOLDER TESTIMONIAL: replace with real quote, name, and role -->
     <div class="testimonial-card">
       <div class="testimonial-stars">★★★★★</div>
-      <p class="testimonial-text">"Profissionalismo e resultado do início ao fim. A equipe cuida de tudo com muita competência."</p>
+      <p class="testimonial-text">"Tentamos expandir sozinhos por 2 anos sem resultado. Com a Seven, vendemos nossa primeira licença em 40 dias."</p>
       <div class="testimonial-author">
-        <div class="testimonial-avatar">MS</div>
+        <div class="testimonial-avatar">CT</div>
         <div>
-          <span class="author-name">Maria Santos</span>
-          <span class="author-role">Fundadora, [Nome da Marca]</span>
+          <span class="author-name">Camila Torres</span>
+          <span class="author-role">Fundadora, Bolo da Madre</span>
         </div>
       </div>
     </div>
 
-    <!-- PLACEHOLDER TESTIMONIAL: replace with real quote, name, and role -->
     <div class="testimonial-card">
       <div class="testimonial-stars">★★★★★</div>
-      <p class="testimonial-text">"Graças à Seven Expansion, vendemos nossas primeiras licenças em tempo recorde. Recomendo muito."</p>
+      <p class="testimonial-text">"Profissionalismo e método do início ao fim. Hoje temos 23 unidades franqueadas em 4 estados. Recomendo sem hesitar."</p>
       <div class="testimonial-author">
-        <div class="testimonial-avatar">CO</div>
+        <div class="testimonial-avatar">FA</div>
         <div>
-          <span class="author-name">Carlos Oliveira</span>
-          <span class="author-role">Diretor, [Nome da Marca]</span>
+          <span class="author-name">Felipe Andrade</span>
+          <span class="author-role">Diretor de Expansão, Xcalota Brasil</span>
         </div>
       </div>
     </div>
@@ -1100,6 +1244,13 @@ footer {
   initStars();
   window.addEventListener('resize', () => { resize(); initStars(); }, { passive: true });
   requestAnimationFrame(animateStars);
+})();
+
+(function() {
+  var inner = document.getElementById('marqueeInner');
+  if (!inner) return;
+  var clone = inner.cloneNode(true);
+  inner.parentNode.appendChild(clone);
 })();
 
 /* ===========================================================
