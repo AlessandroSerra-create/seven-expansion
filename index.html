@@ -199,7 +199,8 @@ button { border: none; cursor: pointer; font-family: inherit; }
   padding: 120px 24px 80px;
   z-index: 3;
   overflow: hidden;
-  background: var(--bg);
+  background: radial-gradient(ellipse at 80% 20%, rgba(180,90,0,0.18) 0%, transparent 60%),
+              radial-gradient(ellipse at 10% 80%, rgba(201,168,76,0.12) 0%, transparent 55%);
 }
 .hero-bg {
   position: absolute;
@@ -215,14 +216,15 @@ button { border: none; cursor: pointer; font-family: inherit; }
 }
 .orb-1 {
   width: 500px; height: 500px;
-  background: var(--accent);
+  background: #D4820A;
+  opacity: 0.18;
   top: -200px; right: -100px;
 }
 .orb-2 {
   width: 400px; height: 400px;
-  background: var(--accent);
+  background: #C9A84C;
+  opacity: 0.14;
   bottom: -150px; left: -100px;
-  opacity: 0.1;
 }
 .grid-overlay {
   position: absolute;
@@ -493,7 +495,7 @@ button { border: none; cursor: pointer; font-family: inherit; }
 }
 .specs-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 40px;
   max-width: 1000px;
   margin: 0 auto;
@@ -520,8 +522,8 @@ button { border: none; cursor: pointer; font-family: inherit; }
   font-family: var(--font-body);
 }
 @media (max-width: 768px) {
-  .specs-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
-  .spec-number { font-size: 2.5rem; }
+  .specs-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .spec-number { font-size: 2rem; }
 }
 
 /* ============================================================
@@ -882,6 +884,112 @@ footer {
   .logo-item { min-width: 90px; height: 44px; }
   .logo-item img { max-height: 36px; max-width: 100px; }
 }
+
+/* ============================================================
+   QUEM SOMOS
+============================================================ */
+#quem-somos {
+  position: relative;
+  z-index: 1;
+  padding: 100px 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+.qs-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.qs-title {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 60px;
+}
+.qs-team-photo {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto 80px;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.qs-team-photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+.qs-members {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  text-align: left;
+}
+.qs-member {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 48px;
+  align-items: start;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
+  padding: 40px;
+  transition: border-color 0.3s ease;
+}
+.qs-member:hover {
+  border-color: rgba(201,168,76,0.3);
+}
+.qs-member-photo {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid rgba(201,168,76,0.2);
+}
+.qs-member-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.qs-member-name {
+  font-size: 1.4rem;
+  font-weight: 800;
+  font-family: var(--font-display);
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+.qs-member-role {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.qs-member-bio {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.65);
+}
+@media (max-width: 768px) {
+  #quem-somos { padding: 60px 20px; }
+  .qs-member {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px;
+  }
+  .qs-member-photo {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto;
+  }
+}
 </style>
 </head>
 <body>
@@ -901,7 +1009,7 @@ footer {
 ============================================================ -->
 <div id="loader">
   <div class="loader-content">
-    <div class="loader-logo"><img src="logo.png" alt="Seven Expansion"></div>
+    <div class="loader-logo"><img src="logo-def.png" alt="Seven Expansion"></div>
     <p class="loader-text">Carregando...</p>
     <div class="loader-bar-track">
       <div class="loader-bar-fill" id="loaderBar"></div>
@@ -915,7 +1023,7 @@ footer {
 <nav id="navbar">
   <div class="nav-inner">
     <div class="nav-logo">
-      <a href="#hero"><img src="logo.png" alt="Seven Expansion"></a>
+      <a href="#hero"><img src="logo-def.png" alt="Seven Expansion"></a>
     </div>
     <div class="nav-links">
       <a href="#specs">Sobre</a>
@@ -962,25 +1070,40 @@ footer {
     <div class="marquee-track" id="marqueeTrack">
       <div class="marquee-inner" id="marqueeInner">
         <div class="logo-item">
-          <img src="logos/pizza-hut.png" alt="Pizza Hut">
+          <img src="logos marcas/fastenergy logo.png" alt="Fastenergy">
         </div>
         <div class="logo-item">
-          <img src="logos/taco-bell.jpg" alt="Taco Bell">
+          <img src="logos marcas/markadapaz logo.png" alt="Marka da Paz">
         </div>
         <div class="logo-item">
-          <img src="logos/mundo-verde.png" alt="Mundo Verde">
+          <img src="logos marcas/multi10 logo.png" alt="Multi10">
         </div>
         <div class="logo-item">
-          <img src="logos/woolie.png" alt="Woolie">
+          <img src="logos marcas/mundoverde logo.png" alt="Mundo Verde">
+        </div>
+        <div class="logo-item">
+          <img src="logos marcas/ohquemfala logo.png" alt="Oh Quem Fala">
+        </div>
+        <div class="logo-item">
+          <img src="logos marcas/stanleys logo.png" alt="Stanley's">
+        </div>
+        <div class="logo-item">
+          <img src="logos marcas/stopcalvicie logo.png" alt="Stop Calvície">
+        </div>
+        <div class="logo-item">
+          <img src="logos marcas/tacobell logo.png" alt="Taco Bell">
+        </div>
+        <div class="logo-item">
+          <img src="logos marcas/welcomestexmex logo.png" alt="Welcome's Tex Mex">
+        </div>
+        <div class="logo-item">
+          <img src="logos marcas/woolie logo.png" alt="Woolie">
+        </div>
+        <div class="logo-item">
+          <img src="logos marcas/xcalora logo.png" alt="Xcalora">
         </div>
         <div class="logo-item">
           <img src="logos/bolo-da-madre.png" alt="Bolo da Madre">
-        </div>
-        <div class="logo-item logo-text">
-          <span>Stanley's</span>
-        </div>
-        <div class="logo-item logo-text">
-          <span>Xcalota Brasil</span>
         </div>
       </div>
     </div>
@@ -994,26 +1117,14 @@ footer {
   <div class="scroll-sticky">
     <canvas id="frameCanvas"></canvas>
 
-    <!-- Card 1: show 0.08 → hide 0.20 -->
-    <!-- Card 1: frame 0-60 -->
-    <div class="annotation-card" data-show="0.0" data-hide="0.5">
-      <span class="card-icon">📦</span>
-      <div class="card-title">Uma caixa cheia de oportunidades</div>
-      <div class="card-text">Cada negócio que você quer expandir começa aqui.</div>
-      <div class="card-stat">
-        <span class="card-stat-number">312+</span>
-        <span class="card-stat-label">licenças vendidas</span>
-      </div>
-    </div>
-
     <!-- Card 2: frame 60-120 -->
     <div class="annotation-card" data-show="0.5" data-hide="1.0">
       <span class="card-icon">🚀</span>
       <div class="card-title">Marcas que já confiam na Seven</div>
       <div class="card-text">Pizza Hut, Taco Bell, Mundo Verde e muito mais.</div>
       <div class="card-stat">
-        <span class="card-stat-number">7</span>
-        <span class="card-stat-label">marcas ativas</span>
+        <span class="card-stat-number">1100+</span>
+        <span class="card-stat-label">licenças vendidas</span>
       </div>
     </div>
 
@@ -1028,26 +1139,67 @@ footer {
   <div class="section-label">Números</div>
   <h2 class="section-title">Nossos números falam por si</h2>
   <div class="specs-grid">
-    <!-- PLACEHOLDER: update with real data -->
-    <div class="spec-item" data-target="7" data-suffix="">
-      <span class="spec-number">0</span>
-      <span class="spec-label">Marcas Gerenciadas</span>
-    </div>
-    <!-- PLACEHOLDER: update with real data -->
-    <div class="spec-item" data-target="312" data-suffix="+">
+    <div class="spec-item" data-target="1100" data-suffix="+">
       <span class="spec-number">0</span>
       <span class="spec-label">Licenças Vendidas</span>
     </div>
-    <!-- PLACEHOLDER: update with real data -->
-    <div class="spec-item" data-target="8" data-suffix="">
+    <div class="spec-item" data-target="10" data-suffix="">
       <span class="spec-number">0</span>
       <span class="spec-label">Anos de Experiência</span>
     </div>
-    <!-- PLACEHOLDER: update with real data -->
     <div class="spec-item" data-target="97" data-suffix="%">
       <span class="spec-number">0</span>
       <span class="spec-label">Satisfação dos Franqueados</span>
     </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     QUEM SOMOS
+============================================================ -->
+<section id="quem-somos">
+  <div class="qs-label">QUEM SOMOS</div>
+  <h2 class="qs-title">A equipe por trás da expansão</h2>
+
+  <div class="qs-team-photo">
+    <img src="foto collaboratori/team.jpeg" alt="Equipe Seven Expansion">
+  </div>
+
+  <div class="qs-members">
+
+    <div class="qs-member">
+      <div class="qs-member-photo">
+        <img src="foto collaboratori/Flaviano.png" alt="Flaviano Biaso">
+      </div>
+      <div class="qs-member-info">
+        <h3 class="qs-member-name">Flaviano Biaso</h3>
+        <div class="qs-member-role">CEO | Seven Expansion & Seven Venture</div>
+        <p class="qs-member-bio">Empresário e especialista em expansão de negócios e franquias, Flaviano Biaso construiu uma trajetória sólida liderando projetos de crescimento com foco em escala, rentabilidade e execução de alto nível. Com mais de 500 franquias comercializadas sob sua liderança, hoje conduz a expansão de 19 marcas simultaneamente, estruturando operações capazes de crescer com consistência e previsibilidade. Integra o ecossistema de Carlos Wizard Martins, com participação ativa em projetos de grandes redes como Taco Bell Brasil, Mundo Verde e Mister Wiz. Além de CEO da Seven Expansion e da Seven Venture, atua como diretor da Dois Irmãos Exportação e Importação e da Davida Nutrition — liderando iniciativas que transformam empresas em modelos replicáveis, escaláveis e sustentáveis.</p>
+      </div>
+    </div>
+
+    <div class="qs-member">
+      <div class="qs-member-photo">
+        <img src="foto collaboratori/Eduardo.png" alt="Eduardo Batista">
+      </div>
+      <div class="qs-member-info">
+        <h3 class="qs-member-name">Eduardo Batista</h3>
+        <div class="qs-member-role">CFO | Conselho de Diretores</div>
+        <p class="qs-member-bio">Formado em Administração e Direito, Eduardo Batista é um dos empreendedores mais reconhecidos de sua geração. CEO do Grupo Marka da Paz, acumulou ao longo de sua carreira conquistas expressivas: Prêmio Jovens de Expressão (2017), Prêmio Jovens Empreendedores (2019) e o título de Empreendedor do Ano pela Câmara de Goiânia (2023). Com uma visão estratégica orientada a resultados e uma atuação que une gestão financeira a liderança empresarial, Eduardo integra o Conselho de Diretores da Seven Expansion trazendo experiência, credibilidade e uma rede de relacionamentos construída ao longo de anos de empreendedorismo de alto impacto.</p>
+      </div>
+    </div>
+
+    <div class="qs-member">
+      <div class="qs-member-photo">
+        <img src="foto collaboratori/Regis.png" alt="Dr. Régis de Figueiredo Silva">
+      </div>
+      <div class="qs-member-info">
+        <h3 class="qs-member-name">Dr. Régis de Figueiredo Silva</h3>
+        <div class="qs-member-role">Conselho de Diretores</div>
+        <p class="qs-member-bio">Médico formado pela Universidade Federal do Ceará em 2008, Régis de Figueiredo Silva é natural de Fortaleza e atua como empreendedor nos setores de alimentação, mercado imobiliário e expansão de negócios. Ao longo de sua trajetória, desenvolveu uma habilidade singular de identificar e estruturar oportunidades, conectando pessoas, capital e negócios por meio de um networking qualificado e estratégico. Sua presença no Conselho de Diretores da Seven Expansion reflete uma visão multidisciplinar — que une a precisão da formação médica à experiência prática do empreendedorismo — contribuindo para decisões mais sólidas, responsáveis e orientadas ao crescimento sustentável.</p>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1103,52 +1255,6 @@ footer {
   </div>
 </section>
 
-<!-- ============================================================
-     11. TESTIMONIALS
-============================================================ -->
-<section id="testimonials">
-  <div class="section-label">Depoimentos</div>
-  <h2 class="section-title">O que dizem nossos parceiros</h2>
-  <div class="testimonials-track" id="testimonialsTrack">
-
-    <div class="testimonial-card">
-      <div class="testimonial-stars">★★★★★</div>
-      <p class="testimonial-text">"Em 6 meses já tínhamos vendido 18 licenças. A Seven Expansion cuida de tudo — do modelo ao fechamento do contrato."</p>
-      <div class="testimonial-author">
-        <div class="testimonial-avatar">RM</div>
-        <div>
-          <span class="author-name">Ricardo Mendonça</span>
-          <span class="author-role">CEO, Woolie</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="testimonial-card">
-      <div class="testimonial-stars">★★★★★</div>
-      <p class="testimonial-text">"Tentamos expandir sozinhos por 2 anos sem resultado. Com a Seven, vendemos nossa primeira licença em 40 dias."</p>
-      <div class="testimonial-author">
-        <div class="testimonial-avatar">CT</div>
-        <div>
-          <span class="author-name">Camila Torres</span>
-          <span class="author-role">Fundadora, Bolo da Madre</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="testimonial-card">
-      <div class="testimonial-stars">★★★★★</div>
-      <p class="testimonial-text">"Profissionalismo e método do início ao fim. Hoje temos 23 unidades franqueadas em 4 estados. Recomendo sem hesitar."</p>
-      <div class="testimonial-author">
-        <div class="testimonial-avatar">FA</div>
-        <div>
-          <span class="author-name">Felipe Andrade</span>
-          <span class="author-role">Diretor de Expansão, Xcalota Brasil</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
 
 <!-- ============================================================
      12. CARD SCANNER (Three.js)
@@ -1169,7 +1275,7 @@ footer {
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <img src="logo.png" alt="Seven Expansion">
+      <img src="logo-def.png" alt="Seven Expansion">
     </div>
     <div class="footer-links">
       <a href="#">Privacidade</a>
@@ -1421,27 +1527,6 @@ window.addEventListener('scroll', () => {
   specObserver.observe(document.getElementById('specs'));
 })();
 
-/* ===========================================================
-   11. TESTIMONIALS DRAG-TO-SCROLL
-=========================================================== */
-(function() {
-  const track = document.getElementById('testimonialsTrack');
-  let isDown = false, startX, scrollLeft;
-
-  track.addEventListener('mousedown', e => {
-    isDown     = true;
-    startX     = e.pageX - track.offsetLeft;
-    scrollLeft = track.scrollLeft;
-  });
-  track.addEventListener('mouseleave', () => { isDown = false; });
-  track.addEventListener('mouseup',    () => { isDown = false; });
-  track.addEventListener('mousemove',  e => {
-    if (!isDown) return;
-    e.preventDefault();
-    const x = e.pageX - track.offsetLeft;
-    track.scrollLeft = scrollLeft - (x - startX);
-  });
-})();
 
 /* ===========================================================
    12. CARD SCANNER — Three.js Particles
