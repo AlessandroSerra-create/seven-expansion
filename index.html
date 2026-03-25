@@ -1570,8 +1570,8 @@ window.addEventListener('scroll', () => {
     } else if (shape < 0.55) {
       // DIAGONAL STEM — from top-right down to bottom-left
       var p = Math.random();
-      targets[i*3]   = ( 1.6 + p * (-1.8) + (Math.random()-0.5) * 0.12) * scale;
-      targets[i*3+1] = ( 0.75 + p * (-2.05) + (Math.random()-0.5) * 0.1)  * scale;
+      targets[i*3]   = ( 1.6 + p * (-0.9) + (Math.random()-0.5) * 0.12) * scale;
+      targets[i*3+1] = ( 0.75 + p * (-0.9) + (Math.random()-0.5) * 0.1)  * scale;
       targets[i*3+2] = (Math.random()-0.5) * 0.1 * scale;
       colors[i*3]=0.9; colors[i*3+1]=0.9; colors[i*3+2]=0.95;
 
