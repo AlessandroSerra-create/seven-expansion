@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seven Expansion — Transformamos marcas em impérios</title>
+<meta name="description" content="A Seven Expansion é especialista em estruturar e vender licenças de franquia. Levamos o seu negócio para outro nível.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Archivo:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   BASE RESET
+============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --accent:        #C9A84C;
+  --accent-light:  #E8C96A;
+  --accent-rgb:    201, 168, 76;
+  --bg:            #000000;
+  --text:          #ffffff;
+  --text-secondary:#888888;
+  --font-display:  'Space Grotesk', sans-serif;
+  --font-body:     'Archivo', sans-serif;
+  --font-mono:     'JetBrains Mono', monospace;
+}
+html { overflow-x: hidden; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+a { color: inherit; text-decoration: none; }
+button { border: none; cursor: pointer; font-family: inherit; }
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #111; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--accent), var(--accent-light));
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.6); }
+
+/* ============================================================
+   1. STARSCAPE
+============================================================ */
+#starscape {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* ============================================================
+   2. LOADER
+============================================================ */
+#loader {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+.loader-logo img {
+  max-width: 120px;
+  display: block;
+  filter: drop-shadow(0 0 16px rgba(var(--accent-rgb), 0.4));
+}
+.loader-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.loader-bar-track {
+  width: 200px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.loader-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+/* ============================================================
+   3. SCROLL PROGRESS BAR
+============================================================ */
+#scrollProgress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  z-index: 10000;
+  transition: width 0.1s linear;
+}
+
+/* ============================================================
+   4. NAVBAR
+============================================================ */
+#navbar {
+  position: fixed;
+  top: 12px;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  justify-content: center;
+}
+.nav-inner {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 12px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+#navbar.nav-scrolled .nav-inner {
+  max-width: 820px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 100px;
+  padding: 10px 24px;
+}
+.nav-logo img {
+  height: 40px;
+  display: block;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: #fff; }
+.nav-cta {
+  background: var(--accent);
+  color: #000 !important;
+  padding: 9px 20px;
+  border-radius: 30px;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.nav-cta:hover {
+  background: var(--accent-light);
+  box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.4);
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+}
+
+/* ============================================================
+   5. HERO
+============================================================ */
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 24px 80px;
+  z-index: 3;
+  overflow: hidden;
+  background: var(--bg);
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+}
+.orb-1 {
+  width: 500px; height: 500px;
+  background: var(--accent);
+  top: -200px; right: -100px;
+}
+.orb-2 {
+  width: 400px; height: 400px;
+  background: var(--accent);
+  bottom: -150px; left: -100px;
+  opacity: 0.1;
+}
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(var(--accent-rgb), 0.35);
+  padding: 7px 18px;
+  border-radius: 30px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  background: rgba(var(--accent-rgb), 0.06);
+}
+.hero-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--accent);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.7); }
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 7vw, 88px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+}
+.hero-title .accent {
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-subtitle {
+  font-size: clamp(16px, 2vw, 19px);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 560px;
+  margin: 0 auto 40px;
+}
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #000;
+  padding: 14px 32px;
+  border-radius: 12px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.3);
+  transition: all 0.3s ease;
+}
+.btn-primary:hover {
+  background: var(--accent-light);
+  box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.5);
+  transform: translateY(-2px);
+}
+.btn-secondary {
+  background: transparent;
+  color: #fff;
+  padding: 14px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 15px;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+.btn-secondary:hover {
+  border-color: rgba(var(--accent-rgb), 0.5);
+  background: rgba(var(--accent-rgb), 0.06);
+  transform: translateY(-2px);
+}
+.btn-large {
+  font-size: 1.1rem;
+  padding: 18px 48px;
+  border-radius: 50px;
+}
+.scroll-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+}
+.scroll-arrow {
+  width: 18px; height: 18px;
+  border-right: 1px solid rgba(255, 255, 255, 0.25);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  transform: rotate(45deg);
+  animation: scroll-bounce 1.8s ease-in-out infinite;
+}
+@keyframes scroll-bounce {
+  0%, 100% { transform: rotate(45deg) translateY(0);   opacity: 0.4; }
+  50%       { transform: rotate(45deg) translateY(6px); opacity: 1;   }
+}
+
+/* ============================================================
+   6. SCROLL ANIMATION  ← CRITICAL
+============================================================ */
+.scroll-animation {
+  height: 350vh;
+  position: relative;
+  background: #ffffff;
+}
+.scroll-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: #ffffff;
+}
+#frameCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* width / height set by JS — do NOT set here */
+}
+
+/* ============================================================
+   7. ANNOTATION CARDS
+============================================================ */
+.annotation-card {
+  position: absolute;
+  bottom: 6vh;
+  left: 4vw;
+  max-width: 400px;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.88);
+  border: 1px solid rgba(201, 168, 76, 0.5);
+  border-left: 4px solid #C9A84C;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 16px;
+  padding: 28px 32px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,168,76,0.1);
+}
+.annotation-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.card-icon { font-size: 2.2rem; margin-bottom: 14px; display: block; }
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  font-family: var(--font-display);
+  color: #fff;
+  line-height: 1.3;
+}
+.card-text {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.card-stat { display: flex; align-items: baseline; gap: 10px; }
+.card-stat-number {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #C9A84C;
+  font-family: var(--font-display);
+  text-shadow: 0 0 20px rgba(201,168,76,0.4);
+}
+.card-stat-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.5);
+}
+
+/* Mobile compact cards */
+@media (max-width: 768px) {
+  .annotation-card {
+    bottom: 1.5vh;
+    left: 2vw;
+    right: 2vw;
+    max-width: none;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .card-desc, .card-stat { display: none; }
+  .card-number { margin-bottom: 0; font-size: 1.1rem; }
+}
+
+/* ============================================================
+   RESPONSIVE: SCROLL SECTION HEIGHT
+============================================================ */
+@media (max-width: 1024px) { .scroll-animation { height: 300vh; } }
+@media (max-width: 768px)  { .scroll-animation { height: 250vh; } }
+
+/* ============================================================
+   SHARED SECTION STYLES
+============================================================ */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4.5vw, 52px);
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+/* ============================================================
+   8. SPECS
+============================================================ */
+#specs {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+#specs .section-title {
+  padding-top: 80px;
+}
+.specs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 64px 32px 120px;
+  text-align: center;
+}
+.spec-number {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  display: block;
+  transition: text-shadow 0.3s ease;
+  line-height: 1;
+}
+.spec-number.counting {
+  text-shadow: 0 0 20px rgba(var(--accent-rgb), 0.5);
+}
+.spec-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-top: 10px;
+  display: block;
+  font-family: var(--font-body);
+}
+@media (max-width: 768px) {
+  .specs-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .spec-number { font-size: 2.5rem; }
+}
+
+/* ============================================================
+   9. FEATURES
+============================================================ */
+#features {
+  position: relative;
+  padding: 80px 24px 120px;
+  z-index: 1;
+}
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1100px;
+  margin: 48px auto 0;
+}
+.feature-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 32px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.feature-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(var(--accent-rgb), 0.2);
+}
+.feature-icon {
+  font-size: 2rem;
+  margin-bottom: 16px;
+}
+.feature-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 10px;
+}
+.feature-card p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+@media (max-width: 768px) {
+  .features-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   10. CTA
+============================================================ */
+#cta {
+  text-align: center;
+  padding: 120px 32px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+.cta-orb {
+  position: absolute;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  filter: blur(30px);
+}
+.cta-content {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+  margin: 0 auto;
+}
+.cta-content h2 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 60px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 18px;
+  line-height: 1.1;
+}
+.cta-content p {
+  font-size: 17px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 40px;
+}
+
+/* ============================================================
+   11. TESTIMONIALS
+============================================================ */
+#testimonials {
+  position: relative;
+  padding: 80px 0 120px;
+  z-index: 1;
+}
+#testimonials .section-title,
+#testimonials .section-label { padding: 0 32px; }
+.testimonials-track {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 20px 48px 40px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
+  margin-top: 8px;
+}
+.testimonials-track:active { cursor: grabbing; }
+.testimonials-track::-webkit-scrollbar { display: none; }
+.testimonial-card {
+  min-width: 300px;
+  max-width: 340px;
+  scroll-snap-align: start;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 32px;
+  flex-shrink: 0;
+  transition: border-color 0.3s;
+}
+.testimonial-card:hover { border-color: rgba(var(--accent-rgb), 0.2); }
+.testimonial-stars {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 18px;
+  color: var(--accent);
+  font-size: 13px;
+}
+.testimonial-text {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.8;
+  margin-bottom: 24px;
+  font-style: italic;
+}
+.testimonial-author { display: flex; align-items: center; gap: 14px; }
+.testimonial-avatar {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.3), rgba(var(--accent-rgb), 0.1));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.author-name {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  display: block;
+  color: #fff;
+}
+.author-role {
+  font-size: 12px;
+  color: var(--text-secondary);
+  display: block;
+  margin-top: 2px;
+}
+@media (max-width: 768px) {
+  .testimonial-card { min-width: 280px; }
+}
+
+/* ============================================================
+   12. CARD SCANNER (Three.js)
+============================================================ */
+#card-scanner {
+  position: relative;
+  padding: 80px 24px 120px;
+  text-align: center;
+  z-index: 1;
+}
+#card-scanner .section-title { margin-bottom: 12px; }
+.scanner-sub {
+  font-size: 16px;
+  color: var(--text-secondary);
+  max-width: 480px;
+  margin: 0 auto 48px;
+  line-height: 1.7;
+}
+.scanner-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  height: 500px;
+  margin: 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.01);
+}
+.scanner-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(var(--accent-rgb), 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--accent-rgb), 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  border-radius: 16px;
+}
+#scannerCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+@media (max-width: 768px) {
+  .scanner-wrap { height: 300px; }
+}
+
+/* ============================================================
+   13. FOOTER
+============================================================ */
+footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 60px 32px 40px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.footer-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.footer-brand { margin-bottom: 24px; }
+.footer-brand img { height: 50px; }
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.footer-links a {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--accent); }
+.footer-copy {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     1. STARSCAPE
+============================================================ -->
+<canvas id="starscape"></canvas>
+
+<!-- ============================================================
+     3. SCROLL PROGRESS BAR
+============================================================ -->
+<div id="scrollProgress"></div>
+
+<!-- ============================================================
+     2. LOADER
+============================================================ -->
+<div id="loader">
+  <div class="loader-content">
+    <div class="loader-logo"><img src="logo.png" alt="Seven Expansion"></div>
+    <p class="loader-text">Carregando...</p>
+    <div class="loader-bar-track">
+      <div class="loader-bar-fill" id="loaderBar"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     4. NAVBAR
+============================================================ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <a href="#hero"><img src="logo.png" alt="Seven Expansion"></a>
+    </div>
+    <div class="nav-links">
+      <a href="#specs">Sobre</a>
+      <a href="#features">Franquias</a>
+      <a href="#testimonials">Resultados</a>
+      <a href="#cta" class="nav-cta">Agendar Consulta</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     5. HERO
+============================================================ -->
+<section id="hero">
+  <div class="hero-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="grid-overlay"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">Expansão de Franquias</div>
+    <h1 class="hero-title">Transformamos marcas em <span class="accent">impérios</span></h1>
+    <p class="hero-subtitle">A Seven Expansion é especialista em estruturar e vender licenças de franquia. Levamos o seu negócio para outro nível.</p>
+    <div class="hero-buttons">
+      <a href="#cta" class="btn-primary">Agendar uma consulta</a>
+      <a href="#features" class="btn-secondary">Ver franquias</a>
+    </div>
+    <div class="scroll-hint">
+      <span>Role para descobrir</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     6 + 7. SCROLL ANIMATION + ANNOTATION CARDS
+============================================================ -->
+<section class="scroll-animation">
+  <div class="scroll-sticky">
+    <canvas id="frameCanvas"></canvas>
+
+    <!-- Card 1: show 0.08 → hide 0.20 -->
+    <!-- Card 1: frame 0-60 -->
+    <div class="annotation-card" data-show="0.0" data-hide="0.5">
+      <span class="card-icon">📦</span>
+      <div class="card-title">Uma caixa cheia de oportunidades</div>
+      <div class="card-text">Cada negócio que você quer expandir começa aqui.</div>
+      <div class="card-stat">
+        <span class="card-stat-number">7</span>
+        <span class="card-stat-label">marcas gerenciadas</span>
+      </div>
+    </div>
+
+    <!-- Card 2: frame 60-120 -->
+    <div class="annotation-card" data-show="0.5" data-hide="1.0">
+      <span class="card-icon">🚀</span>
+      <div class="card-title">Marcas que já confiam na Seven</div>
+      <div class="card-text">Pizza Hut, Taco Bell, Mundo Verde e muito mais.</div>
+      <div class="card-stat">
+        <span class="card-stat-number">7</span>
+        <span class="card-stat-label">franquias ativas</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     8. SPECS
+     PLACEHOLDER: update data-target values with real client data
+============================================================ -->
+<section id="specs">
+  <div class="section-label">Números</div>
+  <h2 class="section-title">Nossos números falam por si</h2>
+  <div class="specs-grid">
+    <!-- PLACEHOLDER: update with real data -->
+    <div class="spec-item" data-target="7" data-suffix="">
+      <span class="spec-number">0</span>
+      <span class="spec-label">Marcas Gerenciadas</span>
+    </div>
+    <!-- PLACEHOLDER: update with real data -->
+    <div class="spec-item" data-target="300" data-suffix="+">
+      <span class="spec-number">0</span>
+      <span class="spec-label">Licenças Vendidas</span>
+    </div>
+    <!-- PLACEHOLDER: update with real data -->
+    <div class="spec-item" data-target="5" data-suffix="">
+      <span class="spec-number">0</span>
+      <span class="spec-label">Anos de Experiência</span>
+    </div>
+    <!-- PLACEHOLDER: update with real data -->
+    <div class="spec-item" data-target="98" data-suffix="%">
+      <span class="spec-number">0</span>
+      <span class="spec-label">Satisfação dos Franqueados</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     9. FEATURES
+============================================================ -->
+<section id="features">
+  <div class="section-label">Serviços</div>
+  <h2 class="section-title">Por que escolher a Seven Expansion?</h2>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🏗️</div>
+      <h3>Estruturação Completa</h3>
+      <p>Criamos o modelo de franquia do zero: manual, contrato, treinamento e suporte.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💼</div>
+      <h3>Venda de Licenças</h3>
+      <p>Nossa equipe comercial cuida de toda a prospecção e venda das licenças.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Consultoria Estratégica</h3>
+      <p>Análise de mercado e planejamento de expansão personalizado.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🤝</div>
+      <h3>Suporte Contínuo</h3>
+      <p>Acompanhamos franqueador e franqueados em todas as etapas.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Resultados Rápidos</h3>
+      <p>Processo otimizado para vender licenças no menor tempo possível.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌟</div>
+      <h3>Marcas de Sucesso</h3>
+      <p>Portfólio com redes nacionais e internacionais de alto desempenho.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     10. CTA
+============================================================ -->
+<section id="cta">
+  <div class="cta-orb"></div>
+  <div class="cta-content">
+    <h2>Pronto para expandir sua marca?</h2>
+    <p>Fale com um especialista da Seven Expansion e descubra como transformar seu negócio em uma franquia de sucesso.</p>
+    <a href="#" class="btn-primary btn-large">Agendar uma consulta</a>
+  </div>
+</section>
+
+<!-- ============================================================
+     11. TESTIMONIALS
+============================================================ -->
+<section id="testimonials">
+  <div class="section-label">Depoimentos</div>
+  <h2 class="section-title">O que dizem nossos parceiros</h2>
+  <div class="testimonials-track" id="testimonialsTrack">
+
+    <!-- PLACEHOLDER TESTIMONIAL: replace with real quote, name, and role -->
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"A Seven Expansion transformou completamente a nossa estratégia de expansão. Resultados surpreendentes em poucos meses."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">JS</div>
+        <div>
+          <span class="author-name">João Silva</span>
+          <span class="author-role">CEO, [Nome da Marca]</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLACEHOLDER TESTIMONIAL: replace with real quote, name, and role -->
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"Profissionalismo e resultado do início ao fim. A equipe cuida de tudo com muita competência."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">MS</div>
+        <div>
+          <span class="author-name">Maria Santos</span>
+          <span class="author-role">Fundadora, [Nome da Marca]</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLACEHOLDER TESTIMONIAL: replace with real quote, name, and role -->
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">"Graças à Seven Expansion, vendemos nossas primeiras licenças em tempo recorde. Recomendo muito."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">CO</div>
+        <div>
+          <span class="author-name">Carlos Oliveira</span>
+          <span class="author-role">Diretor, [Nome da Marca]</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     12. CARD SCANNER (Three.js)
+============================================================ -->
+<section id="card-scanner">
+  <div class="section-label">Tecnologia</div>
+  <h2 class="section-title">Tecnologia a serviço da expansão</h2>
+  <p class="scanner-sub">Monitoramento, dados e performance em tempo real.</p>
+  <div class="scanner-wrap">
+    <div class="scanner-grid"></div>
+    <canvas id="scannerCanvas"></canvas>
+  </div>
+</section>
+
+<!-- ============================================================
+     13. FOOTER
+============================================================ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="logo.png" alt="Seven Expansion">
+    </div>
+    <div class="footer-links">
+      <a href="#">Privacidade</a>
+      <a href="#">Termos</a>
+      <a href="#">Contato</a>
+    </div>
+    <p class="footer-copy">© 2026 Seven Expansion. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<!-- Three.js r128 (for Card Scanner) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+/* ===========================================================
+   1. STARSCAPE
+=========================================================== */
+(function() {
+  const canvas = document.getElementById('starscape');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function initStars() {
+    stars = [];
+    for (let i = 0; i < 180; i++) {
+      const isGold = Math.random() < 0.3;
+      stars.push({
+        x:            Math.random() * canvas.width,
+        y:            Math.random() * canvas.height,
+        radius:       Math.random() * 1.2 + 0.3,
+        baseOpacity:  Math.random() * 0.6 + 0.2,
+        driftX:       (Math.random() - 0.5) * 0.04,
+        driftY:       (Math.random() - 0.5) * 0.02,
+        twinkleSpeed: Math.random() * 0.0008 + 0.0003,
+        twinklePhase: Math.random() * Math.PI * 2,
+        gold:         isGold
+      });
+    }
+  }
+
+  function animateStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach(star => {
+      star.x += star.driftX;
+      star.y += star.driftY;
+      if (star.x < 0) star.x = canvas.width;
+      if (star.x > canvas.width)  star.x = 0;
+      if (star.y < 0) star.y = canvas.height;
+      if (star.y > canvas.height) star.y = 0;
+
+      const twinkle = Math.sin(Date.now() * star.twinkleSpeed + star.twinklePhase);
+      const opacity = Math.max(0, star.baseOpacity + twinkle * 0.3);
+
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+      if (star.gold) {
+        ctx.fillStyle = `rgba(201,168,76,${opacity * 0.7})`;
+      } else {
+        ctx.fillStyle = `rgba(255,255,255,${opacity})`;
+      }
+      ctx.fill();
+    });
+    requestAnimationFrame(animateStars);
+  }
+
+  resize();
+  initStars();
+  window.addEventListener('resize', () => { resize(); initStars(); }, { passive: true });
+  requestAnimationFrame(animateStars);
+})();
+
+/* ===========================================================
+   3. SCROLL PROGRESS BAR
+=========================================================== */
+const scrollProgressEl = document.getElementById('scrollProgress');
+window.addEventListener('scroll', () => {
+  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  scrollProgressEl.style.width = pct + '%';
+}, { passive: true });
+
+/* ===========================================================
+   4. NAVBAR PILL
+=========================================================== */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('nav-scrolled', window.scrollY > 80);
+}, { passive: true });
+
+/* ===========================================================
+   6 + 7. SCROLL ANIMATION — FRAME PRELOADER + CANVAS
+=========================================================== */
+(function() {
+  var FRAME_COUNT = 120;
+  var frames = new Array(FRAME_COUNT);
+  var loadedCount = 0;
+  var currentIdx = -1;
+
+  var canvas = document.getElementById('frameCanvas');
+  var ctx = canvas.getContext('2d');
+  var loaderEl = document.getElementById('loader');
+  var loaderBar = document.getElementById('loaderBar'); /* HTML id is loaderBar */
+  var section = document.querySelector('.scroll-animation');
+
+  /* Force canvas to always be visible on top */
+  canvas.style.position = 'fixed';
+  canvas.style.top = '0';
+  canvas.style.left = '0';
+  canvas.style.zIndex = '2';
+  canvas.style.display = 'block';
+  canvas.style.opacity = '0';
+  canvas.style.transition = 'opacity 0.5s ease';
+
+  function resize() {
+    var dpr = window.devicePixelRatio || 1;
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    if (currentIdx >= 0) draw(currentIdx);
+  }
+  window.addEventListener('resize', resize, { passive: true });
+  resize();
+
+  function draw(idx) {
+    var img = frames[idx];
+    if (!img || !img.complete || !img.naturalWidth) return;
+    var cw = canvas.width, ch = canvas.height;
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, cw, ch);
+    var isMobile = window.innerWidth <= 768;
+    var scaleFactor = isMobile ? 1.0 : 0.5;
+    var scale = Math.min(cw / img.naturalWidth, ch / img.naturalHeight) * scaleFactor;
+    var dw = img.naturalWidth * scale, dh = img.naturalHeight * scale;
+    ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+  }
+
+  var cards = document.querySelectorAll('.annotation-card');
+
+  window.addEventListener('scroll', function() {
+    var rect = section.getBoundingClientRect();
+    var scrollable = section.offsetHeight - window.innerHeight;
+    if (scrollable <= 0) return;
+    var progress = Math.max(0, Math.min(1, -rect.top / scrollable));
+    var idx = Math.min(FRAME_COUNT - 1, Math.floor(progress * FRAME_COUNT));
+    var rect2 = section.getBoundingClientRect();
+    var inSection = rect2.top <= 0 && rect2.bottom >= window.innerHeight;
+    canvas.style.opacity = inSection ? '1' : '0';
+    var allCards = document.querySelectorAll('.annotation-card');
+    allCards.forEach(function(card) {
+      if (!inSection) card.classList.remove('visible');
+    });
+    if (idx !== currentIdx) {
+      currentIdx = idx;
+      draw(idx);
+    }
+    cards.forEach(function(card) {
+      var show = parseFloat(card.dataset.show);
+      var hide = parseFloat(card.dataset.hide);
+      card.classList.toggle('visible', progress >= show && progress <= hide);
+    });
+  }, { passive: true });
+
+  function onAllLoaded() {
+    resize();
+    currentIdx = 0;
+    draw(0);
+    loaderEl.style.transition = 'opacity 0.6s ease';
+    loaderEl.style.opacity = '0';
+    setTimeout(function() { loaderEl.style.display = 'none'; }, 600);
+  }
+
+  for (var i = 0; i < FRAME_COUNT; i++) {
+    (function(idx) {
+      var img = new Image();
+      frames[idx] = img;
+      var done = function() {
+        loadedCount++;
+        loaderBar.style.width = (loadedCount / FRAME_COUNT * 100) + '%';
+        if (loadedCount === FRAME_COUNT) onAllLoaded();
+      };
+      img.onload = done;
+      img.onerror = done;
+      img.src = 'frames/frame_' + String(idx + 1).padStart(4, '0') + '.jpg';
+    })(i);
+  }
+
+  setTimeout(function() {
+    if (loaderEl.style.display !== 'none') onAllLoaded();
+  }, 8000);
+})();
+
+/* ===========================================================
+   8. SPECS COUNT-UP
+=========================================================== */
+(function() {
+  function easeOutExpo(t) {
+    return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+  }
+
+  function countUp(el, target, suffix, duration) {
+    duration = duration || 2000;
+    const start = performance.now();
+    el.classList.add('counting');
+    function update(now) {
+      const elapsed  = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased    = easeOutExpo(progress);
+      const current  = eased * target;
+      el.textContent = (target % 1 === 0 ? Math.floor(current) : current.toFixed(1)) + suffix;
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        el.textContent = target + suffix;
+        el.classList.remove('counting');
+      }
+    }
+    requestAnimationFrame(update);
+  }
+
+  const specObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const items = entry.target.querySelectorAll('.spec-item');
+        items.forEach((item, i) => {
+          setTimeout(() => {
+            const numEl  = item.querySelector('.spec-number');
+            const target = parseFloat(item.dataset.target);
+            const suffix = item.dataset.suffix || '';
+            countUp(numEl, target, suffix);
+          }, i * 200);
+        });
+        specObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  specObserver.observe(document.getElementById('specs'));
+})();
+
+/* ===========================================================
+   11. TESTIMONIALS DRAG-TO-SCROLL
+=========================================================== */
+(function() {
+  const track = document.getElementById('testimonialsTrack');
+  let isDown = false, startX, scrollLeft;
+
+  track.addEventListener('mousedown', e => {
+    isDown     = true;
+    startX     = e.pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+  });
+  track.addEventListener('mouseleave', () => { isDown = false; });
+  track.addEventListener('mouseup',    () => { isDown = false; });
+  track.addEventListener('mousemove',  e => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - track.offsetLeft;
+    track.scrollLeft = scrollLeft - (x - startX);
+  });
+})();
+
+/* ===========================================================
+   12. CARD SCANNER — Three.js Particles
+=========================================================== */
+(function() {
+  const wrap   = document.querySelector('.scanner-wrap');
+  const canvas = document.getElementById('scannerCanvas');
+  const isMobile    = window.innerWidth < 768;
+  const PARTICLE_N  = isMobile ? 1500 : 3000;
+  let settled       = false;
+  let settleProgress = 0;
+
+  /* Init Three.js */
+  const W = wrap.offsetWidth;
+  const H = wrap.offsetHeight;
+
+  const scene    = new THREE.Scene();
+  const camera   = new THREE.PerspectiveCamera(60, W / H, 0.1, 1000);
+  camera.position.z = 280;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setSize(W, H);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x000000, 0);
+
+  /* Build target positions — "7" numeral + diamond outline */
+  const targets = buildTargets(PARTICLE_N, W, H);
+  const startPositions = new Float32Array(PARTICLE_N * 3);
+  const spread = 600;
+  for (let i = 0; i < PARTICLE_N; i++) {
+    startPositions[i * 3]     = (Math.random() - 0.5) * spread;
+    startPositions[i * 3 + 1] = (Math.random() - 0.5) * spread;
+    startPositions[i * 3 + 2] = (Math.random() - 0.5) * 300;
+  }
+
+  const posArray = new Float32Array(PARTICLE_N * 3);
+  for (let i = 0; i < PARTICLE_N * 3; i++) posArray[i] = startPositions[i];
+
+  /* Vertex colors — 70% gold, 30% white */
+  const colArray = new Float32Array(PARTICLE_N * 3);
+  const goldC  = new THREE.Color(0xC9A84C);
+  const whiteC = new THREE.Color(0xffffff);
+  for (let i = 0; i < PARTICLE_N; i++) {
+    const c = Math.random() < 0.7 ? goldC : whiteC;
+    colArray[i * 3]     = c.r;
+    colArray[i * 3 + 1] = c.g;
+    colArray[i * 3 + 2] = c.b;
+  }
+
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+  geo.setAttribute('color',    new THREE.BufferAttribute(colArray, 3));
+
+  const mat = new THREE.PointsMaterial({
+    size:         2,
+    vertexColors: true,
+    transparent:  true,
+    opacity:      0.88,
+    sizeAttenuation: false
+  });
+
+  const points = new THREE.Points(geo, mat);
+  scene.add(points);
+
+  /* Animation loop */
+  function animate() {
+    requestAnimationFrame(animate);
+
+    const posAttr = points.geometry.attributes.position;
+
+    if (settled) {
+      settleProgress = Math.min(settleProgress + 0.006, 1);
+      const ease = 1 - Math.pow(1 - settleProgress, 3); /* ease-out-cubic */
+
+      for (let i = 0; i < PARTICLE_N; i++) {
+        const sx = startPositions[i * 3];
+        const sy = startPositions[i * 3 + 1];
+        const sz = startPositions[i * 3 + 2];
+        const tx = targets[i * 3];
+        const ty = targets[i * 3 + 1];
+        const tz = targets[i * 3 + 2];
+        posAttr.array[i * 3]     = sx + (tx - sx) * ease;
+        posAttr.array[i * 3 + 1] = sy + (ty - sy) * ease;
+        posAttr.array[i * 3 + 2] = sz + (tz - sz) * ease;
+      }
+      posAttr.needsUpdate = true;
+
+      /* Slow Y rotation after particles settle */
+      if (settleProgress > 0.9) {
+        points.rotation.y += 0.003;
+      }
+    } else {
+      /* Gentle pre-formation drift */
+      const t = Date.now() * 0.0002;
+      for (let i = 0; i < PARTICLE_N; i++) {
+        posAttr.array[i * 3]     = startPositions[i * 3]     + Math.sin(t + i * 0.01) * 0.5;
+        posAttr.array[i * 3 + 1] = startPositions[i * 3 + 1] + Math.cos(t + i * 0.013) * 0.5;
+      }
+      posAttr.needsUpdate = true;
+    }
+
+    renderer.render(scene, camera);
+  }
+  requestAnimationFrame(animate);
+
+  /* IntersectionObserver: trigger at 30% */
+  const observer = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && !settled) settled = true;
+  }, { threshold: 0.3 });
+  observer.observe(document.getElementById('card-scanner'));
+
+  /* Resize */
+  window.addEventListener('resize', () => {
+    const nW = wrap.offsetWidth;
+    const nH = wrap.offsetHeight;
+    camera.aspect = nW / nH;
+    camera.updateProjectionMatrix();
+    renderer.setSize(nW, nH);
+  }, { passive: true });
+
+  /* Build "7" + diamond particle targets */
+  function buildTargets(count, W, H) {
+    const arr   = new Float32Array(count * 3);
+    const scale = Math.min(W, H) * 0.28;
+    const pts   = [];
+
+    /* Top bar of "7" */
+    for (let t = 0; t <= 1; t += 0.018) {
+      pts.push([(-0.5 + t) * scale, 0.45 * scale, 0]);
+    }
+    /* Diagonal stroke of "7" */
+    for (let t = 0; t <= 1; t += 0.012) {
+      pts.push([(0.5 - t * 0.65) * scale, (0.45 - t * 0.9) * scale, 0]);
+    }
+    /* Short cross-bar on "7" */
+    for (let t = 0; t <= 1; t += 0.025) {
+      pts.push([(-0.08 + t * 0.3) * scale, 0.08 * scale, 0]);
+    }
+    /* Diamond outline */
+    const ds = scale * 0.68;
+    const steps = 150;
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      let x, y;
+      if      (t < 0.25) { const s = t / 0.25;         x = -ds + s * ds; y = s * ds; }
+      else if (t < 0.5)  { const s = (t - 0.25) / 0.25; x = s * ds;      y = ds - s * ds; }
+      else if (t < 0.75) { const s = (t - 0.5) / 0.25;  x = ds - s * ds; y = -s * ds; }
+      else               { const s = (t - 0.75) / 0.25; x = -s * ds;     y = -ds + s * ds; }
+      pts.push([x, y, 0]);
+    }
+
+    /* Distribute particles over collected seed points */
+    const jitter = scale * 0.035;
+    for (let i = 0; i < count; i++) {
+      const base = pts[Math.floor(Math.random() * pts.length)];
+      arr[i * 3]     = base[0] + (Math.random() - 0.5) * jitter;
+      arr[i * 3 + 1] = base[1] + (Math.random() - 0.5) * jitter;
+      arr[i * 3 + 2] = (Math.random() - 0.5) * jitter * 2;
+    }
+    return arr;
+  }
+})();
+</script>
+</body>
+</html>
