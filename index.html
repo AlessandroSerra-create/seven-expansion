@@ -1039,6 +1039,73 @@ footer {
     margin: 0 auto;
   }
 }
+.qs-team-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  font-weight: 700;
+  text-align: center;
+  margin: 80px 0 40px;
+}
+.qs-team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.qs-team-member {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 28px 24px;
+  text-align: center;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+.qs-team-member:hover {
+  border-color: rgba(201,168,76,0.3);
+  transform: translateY(-4px);
+}
+.qs-team-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 16px;
+  border: 2px solid rgba(201,168,76,0.3);
+}
+.qs-team-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+.qs-team-name {
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  margin-bottom: 4px;
+}
+.qs-team-role {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.qs-team-bio {
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.6);
+}
+@media (max-width: 768px) {
+  .qs-team-grid { grid-template-columns: 1fr; }
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+  .qs-team-grid { grid-template-columns: repeat(2, 1fr); }
+}
 </style>
 </head>
 <body>
@@ -1237,6 +1304,66 @@ footer {
     </div>
 
   </div>
+
+  <div class="qs-team-label">Equipe</div>
+  <div class="qs-team-grid">
+
+    <div class="qs-team-member">
+      <div class="qs-team-photo">
+        <img src="foto collaboratori/Juliano.png" alt="Juliano de Jesus Oliveira">
+      </div>
+      <h4 class="qs-team-name">Juliano de Jesus Oliveira</h4>
+      <div class="qs-team-role">Contador & Consultor Tributário</div>
+      <p class="qs-team-bio">Contador e consultor tributário com expertise em Lucro Real e planejamento fiscal estratégico. Ajuda empresários a estruturarem suas operações com inteligência tributária e decisões baseadas em números reais.</p>
+    </div>
+
+    <div class="qs-team-member">
+      <div class="qs-team-photo">
+        <img src="foto collaboratori/Roberto.png" alt="Roberto Pinheiro">
+      </div>
+      <h4 class="qs-team-name">Roberto Pinheiro</h4>
+      <div class="qs-team-role">Head Comercial</div>
+      <p class="qs-team-bio">Especialista em expansão de franquias e vendas high ticket, com trajetória em grandes redes como Taco Bell, Mundo Verde e Stanley Hair. Referência em fechamento de negócios de alto valor e desenvolvimento de equipes comerciais.</p>
+    </div>
+
+    <div class="qs-team-member">
+      <div class="qs-team-photo">
+        <img src="foto collaboratori/Thiago.png" alt="Thiago Prime">
+      </div>
+      <h4 class="qs-team-name">Thiago Prime</h4>
+      <div class="qs-team-role">Especialista em Expansão</div>
+      <p class="qs-team-bio">Empresário com expertise em expansão nacional e internacional de franquias. Sólida experiência no mercado educacional e no desenvolvimento de equipes de vendas de alta performance.</p>
+    </div>
+
+    <div class="qs-team-member">
+      <div class="qs-team-photo">
+        <img src="foto collaboratori/Silvio.png" alt="Silvio Barbosa">
+      </div>
+      <h4 class="qs-team-name">Silvio Barbosa</h4>
+      <div class="qs-team-role">Diretor Comercial</div>
+      <p class="qs-team-bio">Engenheiro e empresário com atuação em expansão de negócios e desenvolvimento estratégico de mercados. Lidera o crescimento comercial da Seven Expansion com foco em escala e resultados consistentes.</p>
+    </div>
+
+    <div class="qs-team-member">
+      <div class="qs-team-photo">
+        <img src="foto collaboratori/Josue.png" alt="Josué Pistilli">
+      </div>
+      <h4 class="qs-team-name">Josué Pistilli</h4>
+      <div class="qs-team-role">Especialista em Formatação de Franquias</div>
+      <p class="qs-team-bio">Carreira consolidada em grandes players como SMZTO, Cacau Show, Taco Bell e RiHappy. Especialista em expansão e formatação de franquias com histórico comprovado em redes de alto desempenho.</p>
+    </div>
+
+    <div class="qs-team-member">
+      <div class="qs-team-photo">
+        <img src="foto collaboratori/Mario.png" alt="Mario Machado">
+      </div>
+      <h4 class="qs-team-name">Mario Machado</h4>
+      <div class="qs-team-role">Diretor de Processos</div>
+      <p class="qs-team-bio">Administrador com 27 anos de experiência em engenharia de processos e lean manufacturing. Na Seven, integra tecnologia, dados e gestão comportamental para construir operações previsíveis, eficientes e preparadas para crescimento acelerado.</p>
+    </div>
+
+  </div>
+
 </section>
 
 <!-- ============================================================
